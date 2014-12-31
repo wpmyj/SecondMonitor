@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Monitors>
+  <Monitor>
+    <Name>HBusWeb</Name>
+    <Desc>HBus网站</Desc>
+    <Type>WebMonitor</Type>
+    <Url>http://localhost:9530/management/hbusqueue/</Url>
+  </Monitor>
+  <Monitor>
+    <Name>HaiYi queue_msgcenter_cmds</Name>
+    <Desc>HBus CMDS推送服务</Desc>
+    <Type>ServiceMonitor</Type>
+    <Url></Url><!--不设置或在网站中做一个详情页-->
+  </Monitor>
+  <Monitor>
+    <Name>XXX</Name>
+    <Desc>交易所清算文件(DBF)的解析</Desc>
+    <Type>SchTask</Type>
+    <ProcessFile></ProcessFile>
+  </Monitor>
+</Monitors>
