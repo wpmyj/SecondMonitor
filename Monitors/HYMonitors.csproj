@@ -48,7 +48,7 @@
     <Compile Include="MonitoredObjs\CustomMonitoredObjs\CustomMonitoredObj1.cs" />
     <Compile Include="MonitoredObjs\CustomMonitoredObjs\CustomMonitoredObj2.cs" />
     <Compile Include="Loggers\Logger.cs" />
-    <Compile Include="MonitoredObjConfig.cs" />
+    <Compile Include="MonitorConfig.cs" />
     <Compile Include="Monitor.cs" />
     <Compile Include="MonitorService.cs" />
     <Compile Include="MonitorStatus.cs" />

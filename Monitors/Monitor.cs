@@ -34,5 +34,10 @@ namespace HYMonitors
 
         public Dictionary<string,BaseMonitoredObj> MonitoredObjs { get; set; }
 
+        public Monitor()
+        {
+            this.MonitoredObjs = new Dictionary<string, BaseMonitoredObj>();
+        }
+
     }
 }

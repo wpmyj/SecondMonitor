@@ -11,9 +11,33 @@ namespace HYMonitors
     {
         internal static Dictionary<string, Monitor> Build()
         {
+            var monitors = new Dictionary<string, Monitor>();
+            var configs = LoadConfig();
+            foreach (var monitorConfig in configs)
+            {
+                var monitor = CreateMonitor(monitorConfig);
+                monitors.Add(monitor.Name, monitor);
+            }
+            return monitors;
+        }
+
+        private static List<MonitorConfig> LoadConfig()
+        {
             throw new NotImplementedException();
         }
 
+        private static Monitor CreateMonitor(MonitorConfig config)
+        {
+            var monitor = new Monitor() {Name = config.Name};
+
+            foreach (var mo in config.MonitoredObjs)
+            {
+                var monitoredObj = MonitoredObjFactory.CreateMonitoredObj(mo);
+                monitor.MonitoredObjs.Add(monitoredObj.Name, monitoredObj);
+            }
+
+            return monitor;
+        }
     }
 
     static class MonitoredObjFactory

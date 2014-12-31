@@ -6,7 +6,13 @@ using System.Threading.Tasks;
 
 namespace HYMonitors
 {
-    public class MonitoredObjConfig
+    internal class MonitorConfig
+    {
+        public string Name { get; set; }
+        public List<MonitoredObjConfig> MonitoredObjs { get; set; }
+    }
+
+    internal class MonitoredObjConfig
     {
         public string Name { get; set; }
         public string Desc { get; set; }
@@ -15,9 +21,5 @@ namespace HYMonitors
         public string ProcessFile { get; set; }
     }
 
-    public class MonitorConfig
-    {
-        public string Name { get; set; }
-        public List<MonitoredObjConfig> MonitoredObjs { get; set; }
-    }
+
 }

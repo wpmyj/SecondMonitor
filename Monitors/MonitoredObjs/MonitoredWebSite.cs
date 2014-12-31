@@ -22,6 +22,5 @@ namespace HYMonitors.MonitoredObjs
         {
             throw new NotImplementedException();
         }
-
     }
 }
