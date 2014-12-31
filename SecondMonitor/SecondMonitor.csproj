@@ -231,9 +231,9 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Monitors\Monitors.csproj">
+    <ProjectReference Include="..\Monitors\HYMonitors.csproj">
       <Project>{bc90a5c4-5d38-4a90-a1ef-dc4b31f4ddad}</Project>
-      <Name>Monitors</Name>
+      <Name>HYMonitors</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

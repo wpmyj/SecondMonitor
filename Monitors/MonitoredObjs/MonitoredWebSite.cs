@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Monitors.BaseMonitors
+namespace HYMonitors.MonitoredObjs
 {
-    public class WebMonitor: Monitor
+    class MonitoredWebSite: BaseMonitoredObj
     {
-        public override bool IsAlive()
+        public override MonitorStatus GetStatus()
         {
             throw new NotImplementedException();
         }

@@ -4,13 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Monitors.Loggers
+namespace HYMonitors.Loggers
 {
     public abstract class Logger
     {
         public abstract List<Log> GetLogs();
         public abstract List<Log> GetLogs(int take, int skip);
-
     }
 
     public class Log

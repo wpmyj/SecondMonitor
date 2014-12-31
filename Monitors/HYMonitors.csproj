@@ -7,8 +7,8 @@
     <ProjectGuid>{BC90A5C4-5D38-4A90-A1EF-DC4B31F4DDAD}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Monitors</RootNamespace>
-    <AssemblyName>Monitors</AssemblyName>
+    <RootNamespace>HYMonitors</RootNamespace>
+    <AssemblyName>HYMonitors</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -39,13 +39,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BaseMonitors\Monitor.cs" />
-    <Compile Include="BaseMonitors\SchTaskMonitor.cs" />
-    <Compile Include="BaseMonitors\ServiceMonitor.cs" />
-    <Compile Include="BaseMonitors\WebMonitor.cs" />
-    <Compile Include="CustomMonitors\CustomMonitor1.cs" />
+    <Compile Include="MonitorBuilder.cs" />
+    <Compile Include="MonitoredObjs\CustomMonitoredObj.cs" />
+    <Compile Include="MonitoredObjs\BaseMonitoredObj.cs" />
+    <Compile Include="MonitoredObjs\MonitoredSchTask.cs" />
+    <Compile Include="MonitoredObjs\MonitoredService.cs" />
+    <Compile Include="MonitoredObjs\MonitoredWebSite.cs" />
+    <Compile Include="MonitoredObjs\CustomMonitoredObjs\CustomMonitoredObj1.cs" />
+    <Compile Include="MonitoredObjs\CustomMonitoredObjs\CustomMonitoredObj2.cs" />
     <Compile Include="Loggers\Logger.cs" />
+    <Compile Include="MonitoredObjConfig.cs" />
+    <Compile Include="Monitor.cs" />
     <Compile Include="MonitorService.cs" />
+    <Compile Include="MonitorStatus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

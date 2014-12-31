@@ -5,18 +5,18 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Monitors.BaseMonitors
+namespace HYMonitors.MonitoredObjs
 {
-    public class SchTaskMonitor : Monitor
+    class MonitoredSchTask : BaseMonitoredObj
     {
         private long isRunning;
 
-        public SchTaskMonitor() : base()
+        public MonitoredSchTask() : base()
         {
             isRunning = 0L;
         }
 
-        public override bool IsAlive()
+        public override MonitorStatus GetStatus()
         {
             throw new NotImplementedException();
         }

@@ -1,14 +1,14 @@
-﻿using Monitors.BaseMonitors;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace SecondMonitor.Monitors
+namespace HYMonitors.MonitoredObjs
 {
-    public class CustomMonitor1 : CustomMonitor
+    class MonitoredService: BaseMonitoredObj
     {
-        public override bool IsAlive()
+        public override MonitorStatus GetStatus()
         {
             throw new NotImplementedException();
         }

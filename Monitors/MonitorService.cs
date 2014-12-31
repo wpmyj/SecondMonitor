@@ -1,17 +1,17 @@
-﻿using Monitors.BaseMonitors;
-using Monitors.Loggers;
+﻿using HYMonitors.MonitoredObjs;
+using HYMonitors.Loggers;
 using System;
 using System.Collections.Generic;
 
-namespace SecondMonitor.Monitors
+namespace HYMonitors
 {
     public class MonitorService
     {
 
         private MonitorService instance;
-        private object _lock =new object();
+        private object _lock = new object();
 
-        private Dictionary<string,Monitor> monitors;
+        private Dictionary<string, Monitor> monitors;
 
         public MonitorService Instance
         {
@@ -30,30 +30,7 @@ namespace SecondMonitor.Monitors
 
         private MonitorService()
         {
-            monitors = new Dictionary<string, Monitor>();
-            BuildMonitors();
-        }
-
-        private void BuildMonitors()
-        {
-            BuildConfigMonitors();
-            BuildCustomMonitors();
-        }
-
-        /// <summary>
-        /// 根据xml配置生成监视器
-        /// </summary>
-        private void BuildConfigMonitors()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// 生成自定义监视器
-        /// </summary>
-        private void BuildCustomMonitors()
-        {
-            throw new NotImplementedException();
+            monitors = MonitorBuilder.Build();
         }
 
         /// <summary>
@@ -65,27 +42,27 @@ namespace SecondMonitor.Monitors
             throw new NotImplementedException();
         }
 
-        public bool StartMonitor(string monitorName,List<Object> args)
+        public bool StartMonitor(string monitorName, string monitoredObjName, List<Object> args)
         {
-            return this.monitors[monitorName].Start(args);
+            return this.monitors[monitorName].MonitoredObjs[monitoredObjName].Start(args);
         }
 
-        public bool StopMonitor(string monitorName)
+        public bool StopMonitor(string monitorName, string monitoredObjName)
         {
-            return this.monitors[monitorName].Stop();
+            return this.monitors[monitorName].MonitoredObjs[monitoredObjName].Stop();
         }
 
-        public List<Log> GetMonitorLogs(string monitorName,int take, int skip)
+        public List<Log> GetMonitorLogs(string monitorName, string monitoredObjName, int take, int skip)
         {
-            var monitor = this.monitors[monitorName];
+            var monitor = this.monitors[monitorName].MonitoredObjs[monitoredObjName];
             if (monitor.HasLog)
             {
                 return monitor.Logger.GetLogs(take, skip);
             }
             else
             {
-                throw new NotImplementedException();
+                throw new Exception(string.Format("{0} 没实现日志服务", monitoredObjName));
             }
-        } 
+        }
     }
 }

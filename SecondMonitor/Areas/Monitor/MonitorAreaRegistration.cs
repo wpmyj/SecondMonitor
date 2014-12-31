@@ -8,7 +8,7 @@ namespace SecondMonitor.Areas.Monitor
         {
             get 
             {
-                return "Monitor";
+                return "BaseMonitoredObj";
             }
         }
 
@@ -16,7 +16,7 @@ namespace SecondMonitor.Areas.Monitor
         {
             context.MapRoute(
                 "Monitor_default",
-                "Monitor/{controller}/{action}/{id}",
+                "BaseMonitoredObj/{controller}/{action}/{id}",
                 new { action = "Index", id = UrlParameter.Optional }
             );
         }

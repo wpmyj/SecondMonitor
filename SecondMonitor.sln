@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SecondMonitor", "SecondMoni
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SecondMonitor.Tests", "SecondMonitor.Tests\SecondMonitor.Tests.csproj", "{05A782DB-ABE3-4EDC-8483-EF38397FDBBB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Monitors", "Monitors\Monitors.csproj", "{BC90A5C4-5D38-4A90-A1EF-DC4B31F4DDAD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HYMonitors", "Monitors\HYMonitors.csproj", "{BC90A5C4-5D38-4A90-A1EF-DC4B31F4DDAD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
