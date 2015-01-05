@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Monitors>
+  <Monitor>
+    <Name>HBus</Name>
+  </Monitor>
+  <Monitor>
+    <Name>XXX</Name>
+  </Monitor>
+</Monitors>

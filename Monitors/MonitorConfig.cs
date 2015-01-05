@@ -17,9 +17,7 @@ namespace HYMonitors
         public string Name { get; set; }
         public string Desc { get; set; }
         public string Type { get; set; }
-        public string Url { get; set; }
-        public string ProcessFile { get; set; }
+        public string Property1 { get; set; }
+        public string Property2 { get; set; }
     }
-
-
 }

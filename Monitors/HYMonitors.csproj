@@ -30,6 +30,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="nunit.framework">
+      <HintPath>..\packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -44,7 +47,7 @@
     <Compile Include="MonitoredObjs\BaseMonitoredObj.cs" />
     <Compile Include="MonitoredObjs\MonitoredSchTask.cs" />
     <Compile Include="MonitoredObjs\MonitoredService.cs" />
-    <Compile Include="MonitoredObjs\MonitoredWebSite.cs" />
+    <Compile Include="MonitoredObjs\MonitoredIISApp.cs" />
     <Compile Include="MonitoredObjs\CustomMonitoredObjs\CustomMonitoredObj1.cs" />
     <Compile Include="MonitoredObjs\CustomMonitoredObjs\CustomMonitoredObj2.cs" />
     <Compile Include="Loggers\Logger.cs" />
@@ -53,9 +56,18 @@
     <Compile Include="MonitorService.cs" />
     <Compile Include="MonitorStatus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Test\TestMonitorBuilder.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Monitors.xml" />
+    <Content Include="Monitors.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestMonitors.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

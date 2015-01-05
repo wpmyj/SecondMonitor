@@ -1,20 +1,31 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Monitors>
   <Monitor>
-    <Name>HBusWeb</Name>
-    <Desc>HBus网站</Desc>
-    <Type>WebMonitor</Type>
-    <Url>http://localhost:9530/management/hbusqueue/</Url>
-  </Monitor>
-  <Monitor>
-    <Name>HaiYi queue_msgcenter_cmds</Name>
-    <Desc>HBus CMDS推送服务</Desc>
-    <Type>ServiceMonitor</Type>
+    <Name>HBus</Name>
+    <MonitoredObjs>
+      <MonitoredObj>
+        <Name>HBusWeb</Name>
+        <Desc>HBus网站</Desc>
+        <Type>MonitoredWebSite</Type>
+        <Property1>IISPoolName</Property1>
+        <Property2>http://localhost:9530/management/hbusqueue/</Property2>
+      </MonitoredObj>
+      <MonitoredObj>
+        <Name>HaiYi queue_msgcenter_cmds</Name>
+        <Desc>HBus CMDS推送服务</Desc>
+        <Type>MonitoredService</Type>
+      </MonitoredObj>
+    </MonitoredObjs>
   </Monitor>
   <Monitor>
     <Name>XXX</Name>
-    <Desc>交易所清算文件(DBF)的解析</Desc>
-    <Type>SchTaskMonitor</Type>
-    <ProcessFile></ProcessFile>
+    <MonitoredObjs>
+      <MonitoredObj>
+        <Name>HBusWeb</Name>
+        <Desc>交易所清算文件(DBF)的解析</Desc>
+        <Type>MonitoredSchTask</Type>
+        <Property1></Property1>
+      </MonitoredObj>
+    </MonitoredObjs>
   </Monitor>
 </Monitors>

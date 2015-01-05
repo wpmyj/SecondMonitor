@@ -18,7 +18,14 @@ namespace HYMonitors.MonitoredObjs
 
         public override MonitorStatus GetStatus()
         {
-            throw new NotImplementedException();
+            if (Interlocked.Read(ref isRunning) == 1L)
+            {
+                return MonitorStatus.Running;
+            }
+            else
+            {
+                return MonitorStatus.Stop;
+            }
         }
 
         public override bool Start(List<object> args)
@@ -29,18 +36,28 @@ namespace HYMonitors.MonitoredObjs
             }
             Interlocked.Exchange(ref isRunning, 1L);
             
-            new Thread(StartWithThread).Start(args);
+            new Thread(RunTaskProcess).Start(args);
             
             return true;
         }
 
-        private void StartWithThread(object o)
+        /// <summary>
+        /// 计划任务耗时未知，所以在新线程中启动计划任务，
+        /// </summary>
+        /// <param name="o"></param>
+        private void RunTaskProcess(object o)
         {
             var args = (List<object>) o;
 
             //process
-            //
+            try
+            {
 
+            }
+            catch (Exception)
+            {
+                
+            }
             Interlocked.Exchange(ref isRunning, 0L);
         }
 

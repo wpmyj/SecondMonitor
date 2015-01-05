@@ -25,4 +25,55 @@ namespace HYMonitors.MonitoredObjs
 
     }
 
+    internal abstract class NestedMonitoredObj:BaseMonitoredObj
+    {
+        protected BaseMonitoredObj container;
+
+        public NestedMonitoredObj(BaseMonitoredObj container)
+        {
+            this.container = container;
+        }
+
+        public override MonitorStatus GetStatus()
+        {
+            if (container.GetStatus() != MonitorStatus.Running)
+            {
+                return container.GetStatus();
+            }
+            else
+            {
+                return GetSelfStatus();
+            }
+        }
+
+        protected abstract MonitorStatus GetSelfStatus();
+
+        public override bool Start(List<object> args)
+        {
+            if (StartContainer(args))
+            {
+                return StartSelf(args);
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        private bool StartContainer(List<object> args)
+        {
+            if (container.GetStatus() != MonitorStatus.Running)
+            {
+                return container.Start(args);
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        protected abstract bool StartSelf(List<object> args);
+
+    }
+
 }

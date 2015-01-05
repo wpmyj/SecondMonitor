@@ -7,22 +7,29 @@ using HYMonitors.MonitoredObjs;
 
 namespace HYMonitors
 {
+    /// <summary>
+    /// 监视器：一个完整的项目，如HBus
+    /// 包含多个被监视的进程、服务、网站等
+    /// </summary>
     class Monitor
     {
         public string Name { get; set; }
 
-        public MonitorStatus Status {
+        /// <summary>
+        /// 计划任务不是实时监控
+        /// </summary>
+        public MonitorStatus Status
+        {
             get
             {
                 var status = MonitorStatus.Running;
                 foreach (var pair in MonitoredObjs)
                 {
                     var type = pair.Value.GetType();
-                    if (type == typeof (MonitoredService) ||
-                        type == typeof (MonitoredWebSite))
+                    if (type != typeof(MonitoredSchTask))
                     {
                         var s = pair.Value.GetStatus();
-                        if ((int) status < (int) s)
+                        if ((int)status < (int)s)
                         {
                             status = s;
                         }
@@ -32,7 +39,7 @@ namespace HYMonitors
             }
         }
 
-        public Dictionary<string,BaseMonitoredObj> MonitoredObjs { get; set; }
+        public Dictionary<string, BaseMonitoredObj> MonitoredObjs { get; set; }
 
         public Monitor()
         {
