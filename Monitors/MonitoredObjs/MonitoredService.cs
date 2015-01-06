@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace HYMonitors.MonitoredObjs
 {
+    /// <summary>
+    /// WMI
+    /// </summary>
     class MonitoredService: BaseMonitoredObj
     {
         public override MonitorStatus GetStatus()

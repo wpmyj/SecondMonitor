@@ -55,7 +55,9 @@ namespace HYMonitors.MonitoredObjs
         }
     }
 
-
+    /// <summary>
+    /// appcmd?
+    /// </summary>
     class MonitoredIISApp : NestedMonitoredObj
     {
 

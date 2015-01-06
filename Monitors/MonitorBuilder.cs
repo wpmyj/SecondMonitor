@@ -16,11 +16,18 @@ namespace HYMonitors
     {
         private static readonly string xmlPath = "Monitors.xml";
 
+        public static bool WatchDog { get; set; }
+
         internal static Dictionary<string, Monitor> Build()
+        {
+            return Build(xmlPath);
+        }
+
+        internal static Dictionary<string, Monitor> Build(string path)
         {
             // todo
             var monitors = new Dictionary<string, Monitor>();
-            var configs = LoadConfig(xmlPath);
+            var configs = LoadConfig(path);
             foreach (var monitorConfig in configs)
             {
                 var monitor = CreateMonitor(monitorConfig);
@@ -32,6 +39,7 @@ namespace HYMonitors
         internal static List<MonitorConfig> LoadConfig(string xmlpath)
         {
             var doc = XDocument.Load(xmlpath);
+            WatchDog = Boolean.Parse(doc.Element("Monitors").Element("WatchDog").Value);
             var monitors = doc.Element("Monitors").Elements("Monitor");
             var monitorsConf = from monitor in doc.Element("Monitors").Elements("Monitor")
                                select new MonitorConfig()
@@ -43,6 +51,8 @@ namespace HYMonitors
                                                         Name = monitoredObj.Element("Name").Value,
                                                         Desc = monitoredObj.Element("Desc").Value,
                                                         Type = monitoredObj.Element("Type").Value,
+                                                        Remote = monitoredObj.Element("Remote") == null ? false : Boolean.Parse(monitoredObj.Element("Remote").Value),
+                                                        Watched = monitoredObj.Element("Watched") == null ? false : Boolean.Parse(monitoredObj.Element("Watched").Value),
                                                         Property1 = monitoredObj.Element("Property1") == null ? null : monitoredObj.Element("Property1").Value,
                                                         Property2 = monitoredObj.Element("Property2") == null ? null : monitoredObj.Element("Property2").Value
                                                     }).ToList()
@@ -99,6 +109,8 @@ namespace HYMonitors
             {
                 Name = config.Name,
                 Desc = config.Desc,
+                Remote = config.Remote,
+                Watched = config.Watched,
                 HasLog = false,
                 Url = config.Property2
             };
@@ -112,6 +124,8 @@ namespace HYMonitors
             {
                 Name = config.Name,
                 Desc = config.Desc,
+                Remote = config.Remote,
+                Watched = config.Watched,
                 HasLog = false
             };
             return monitoredObj;
@@ -123,6 +137,7 @@ namespace HYMonitors
             {
                 Name = config.Name,
                 Desc = config.Desc,
+                Remote = config.Remote,
                 HasLog = false,
                 ProcessFile = config.Property1
             };

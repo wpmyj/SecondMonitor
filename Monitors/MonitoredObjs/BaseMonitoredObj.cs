@@ -14,6 +14,8 @@ namespace HYMonitors.MonitoredObjs
         internal string ProcessFile { get; set; }
         internal string Desc { get; set; }
         internal bool HasLog { get; set; }
+        internal bool Watched { get; set; }
+        internal bool Remote { get; set; }
 
         public Logger Logger { get; set; }
 

@@ -57,6 +57,10 @@
     <Compile Include="MonitorStatus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Test\TestMonitorBuilder.cs" />
+    <Compile Include="Test\TestMonitoredIISApp.cs" />
+    <Compile Include="Test\TestMonitoredSchTask.cs" />
+    <Compile Include="Test\TestMonitoredService.cs" />
+    <Compile Include="WatchDog.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Monitors.xml">

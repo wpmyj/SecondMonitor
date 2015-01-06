@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Monitors>
+  <WatchDog></WatchDog>
   <Monitor>
     <Name>HBus</Name>
     <MonitoredObjs>
@@ -7,12 +8,14 @@
         <Name>HBusWeb</Name>
         <Desc>HBus网站</Desc>
         <Type>MonitoredWebSite</Type>
+        <Watched>false</Watched>
         <Property1>IISPoolName</Property1>
         <Property2>http://localhost:9530/management/hbusqueue/</Property2>
       </MonitoredObj>
       <MonitoredObj>
         <Name>HaiYi queue_msgcenter_cmds</Name>
         <Desc>HBus CMDS推送服务</Desc>
+        <Watched>true</Watched>
         <Type>MonitoredService</Type>
       </MonitoredObj>
     </MonitoredObjs>

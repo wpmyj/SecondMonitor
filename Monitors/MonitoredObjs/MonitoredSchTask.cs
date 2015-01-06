@@ -7,13 +7,18 @@ using System.Threading.Tasks;
 
 namespace HYMonitors.MonitoredObjs
 {
+    /// <summary>
+    /// 用schtasks命令和系统互交
+    /// </summary>
     class MonitoredSchTask : BaseMonitoredObj
     {
         private long isRunning;
+        private object _lock = new object();
 
         public MonitoredSchTask() : base()
         {
             isRunning = 0L;
+            this.Watched = false;
         }
 
         public override MonitorStatus GetStatus()
@@ -34,11 +39,16 @@ namespace HYMonitors.MonitoredObjs
             {
                 throw new Exception(string.Format("计划任务 {0} 正在运行", this.Name));
             }
-            Interlocked.Exchange(ref isRunning, 1L);
-            
-            new Thread(RunTaskProcess).Start(args);
-            
-            return true;
+            lock (_lock)
+            {
+                if (Interlocked.Read(ref isRunning) == 1L)
+                {
+                    throw new Exception(string.Format("计划任务 {0} 正在运行", this.Name));
+                }
+                new Thread(RunTaskProcess).Start(args);
+                Interlocked.Exchange(ref isRunning, 1L);
+                return true;
+            }
         }
 
         /// <summary>

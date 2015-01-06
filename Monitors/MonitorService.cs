@@ -1,15 +1,21 @@
-﻿using HYMonitors.MonitoredObjs;
+﻿using System.Linq;
+using System.Runtime.InteropServices;
+using HYMonitors.MonitoredObjs;
 using HYMonitors.Loggers;
 using System;
 using System.Collections.Generic;
 
 namespace HYMonitors
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class MonitorService
     {
 
         private MonitorService instance;
         private object _lock = new object();
+        private WatchDog watchDog;
 
         private Dictionary<string, Monitor> monitors;
 
@@ -31,6 +37,28 @@ namespace HYMonitors
         private MonitorService()
         {
             monitors = MonitorBuilder.Build();
+            if (MonitorBuilder.WatchDog)
+            {
+                var watchedMonitoredObjs =new List<BaseMonitoredObj>();
+                monitors.Values.ToList().ForEach(x => watchedMonitoredObjs.AddRange(x.MonitoredObjs.Values.ToList().FindAll(y => y.Watched)));
+                watchDog = new WatchDog(watchedMonitoredObjs);
+            }
+        }
+
+        public void Start()
+        {
+            if (watchDog != null)
+            {
+                watchDog.Start();
+            }
+        }
+
+        public void Stop()
+        {
+            if (watchDog != null)
+            {
+                watchDog.Stop();
+            }
         }
 
         /// <summary>
