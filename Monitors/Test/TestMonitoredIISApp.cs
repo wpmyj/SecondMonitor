@@ -23,19 +23,22 @@ namespace HYMonitors.Test
         [Test]
         public void TestGetStatus()
         {
-            var status = instance.GetStatus();
+            var status = instance.Status;
         }
 
         [Test]
         public void TestStart()
         {
-            
+            instance.Stop();
+            instance.Start(null);
+            Assert.AreEqual(MonitorStatus.Running, instance.Status);
         }
 
         [Test]
         public void TestStop()
         {
-            
+            instance.Stop();
+            Assert.AreEqual(MonitorStatus.Stop, instance.Status);
         }
     }
 }

@@ -11,7 +11,7 @@ namespace HYMonitors
     /// 监视器：一个完整的项目，如HBus
     /// 包含多个被监视的进程、服务、网站等
     /// </summary>
-    class Monitor
+    public class Monitor
     {
         public string Name { get; set; }
 
@@ -28,7 +28,7 @@ namespace HYMonitors
                     var type = pair.Value.GetType();
                     if (type != typeof(MonitoredSchTask))
                     {
-                        var s = pair.Value.GetStatus();
+                        var s = pair.Value.Status;
                         if ((int)status < (int)s)
                         {
                             status = s;

@@ -9,17 +9,17 @@ namespace HYMonitors.CustomMonitors
 {
     class CustomMonitoredObj2 : CustomMonitoredObj
     {
-        public override MonitorStatus GetStatus()
+        protected override MonitorStatus GetStatus()
         {
             throw new NotImplementedException();
         }
 
-        public override bool Start(List<object> args)
+        internal override bool Start(List<object> args)
         {
             throw new NotImplementedException();
         }
 
-        public override bool Stop()
+        internal override bool Stop()
         {
             throw new NotImplementedException();
         }

@@ -1,4 +1,5 @@
-﻿using HYMonitors.Loggers;
+﻿using System.Threading;
+using HYMonitors.Loggers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,27 +8,64 @@ using System.Threading.Tasks;
 
 namespace HYMonitors.MonitoredObjs
 {
-    internal abstract class BaseMonitoredObj
+    public abstract class BaseMonitoredObj
     {
-        internal string Name { get; set; }
-        internal string Url { get; set; }
-        internal string ProcessFile { get; set; }
-        internal string Desc { get; set; }
-        internal bool HasLog { get; set; }
-        internal bool Watched { get; set; }
-        internal bool Remote { get; set; }
+        private MonitorStatus? currentStatus;
+        private ReaderWriterLock statusLock;
+        private DateTime statusUpdateTime;
+        private TimeSpan timeout;
+
+        public virtual string Name { get; set; }
+        public string Url { get; set; }
+        public string ProcessFile { get; set; }
+        public string Desc { get; set; }
+        public bool HasLog { get; set; }
+        public bool Watched { get; set; }
+        public bool Remote { get; set; }
+        public MonitorStatus Status
+        {
+            get
+            {
+                MonitorStatus? _status;
+                try
+                {
+                    statusLock.AcquireReaderLock(timeout);
+                    if (currentStatus == null ||
+                        statusUpdateTime == null ||
+                        DateTime.Now - statusUpdateTime > timeout)
+                    {
+                        var lc = statusLock.UpgradeToWriterLock(timeout);
+                        currentStatus = GetStatus();
+                        statusUpdateTime = DateTime.Now;
+                        statusLock.DowngradeFromWriterLock(ref lc);
+                    }
+                    _status = currentStatus;
+                }
+                finally
+                {
+                    statusLock.ReleaseReaderLock();
+                }
+                return _status.Value;
+            }
+        }
+
+        public BaseMonitoredObj()
+        {
+            statusLock = new ReaderWriterLock();
+            timeout = new TimeSpan(0, 0, 5);  //
+        }
 
         public Logger Logger { get; set; }
 
-        public abstract MonitorStatus GetStatus();
+        protected abstract MonitorStatus GetStatus();
 
-        public abstract bool Start(List<object> args);
+        internal abstract bool Start(List<object> args);
 
-        public abstract bool Stop();
+        internal abstract bool Stop();
 
     }
 
-    internal abstract class NestedMonitoredObj:BaseMonitoredObj
+    public abstract class NestedMonitoredObj : BaseMonitoredObj
     {
         protected BaseMonitoredObj container;
 
@@ -36,11 +74,11 @@ namespace HYMonitors.MonitoredObjs
             this.container = container;
         }
 
-        public override MonitorStatus GetStatus()
+        protected override MonitorStatus GetStatus()
         {
-            if (container.GetStatus() != MonitorStatus.Running)
+            if (container.Status != MonitorStatus.Running)
             {
-                return container.GetStatus();
+                return container.Status;
             }
             else
             {
@@ -50,7 +88,7 @@ namespace HYMonitors.MonitoredObjs
 
         protected abstract MonitorStatus GetSelfStatus();
 
-        public override bool Start(List<object> args)
+        internal override bool Start(List<object> args)
         {
             if (StartContainer(args))
             {
@@ -64,7 +102,7 @@ namespace HYMonitors.MonitoredObjs
 
         private bool StartContainer(List<object> args)
         {
-            if (container.GetStatus() != MonitorStatus.Running)
+            if (container.Status != MonitorStatus.Running)
             {
                 return container.Start(args);
             }

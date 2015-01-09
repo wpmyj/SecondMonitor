@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Monitors>
-  <WatchDog></WatchDog>
+  <WatchDog>true</WatchDog>
+  <WatchInterval>5</WatchInterval>
   <Monitor>
     <Name>HBus</Name>
     <MonitoredObjs>
@@ -17,6 +18,14 @@
         <Desc>HBus CMDS推送服务</Desc>
         <Watched>true</Watched>
         <Type>MonitoredService</Type>
+        <Property1>.</Property1>
+      </MonitoredObj>
+      <MonitoredObj>
+        <Name>gupdate</Name>
+        <Desc>远程的Google 更新服务 (gupdate)</Desc>
+        <Watched>true</Watched>
+        <Type>MonitoredService</Type>
+        <Property1>192.168.0.157</Property1>
       </MonitoredObj>
     </MonitoredObjs>
   </Monitor>
@@ -24,10 +33,10 @@
     <Name>XXX</Name>
     <MonitoredObjs>
       <MonitoredObj>
-        <Name>HBusWeb</Name>
+        <Name>TestSchTask</Name>
         <Desc>交易所清算文件(DBF)的解析</Desc>
         <Type>MonitoredSchTask</Type>
-        <Property1></Property1>
+        <Property1>D:\language\c#\projects\SecondMonitor\Monitors\bin\Debug\Test\date.bat</Property1>
       </MonitoredObj>
     </MonitoredObjs>
   </Monitor>

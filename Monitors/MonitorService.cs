@@ -7,6 +7,8 @@ using System.Collections.Generic;
 
 namespace HYMonitors
 {
+    public delegate void WriteLog(string msg);
+
     /// <summary>
     /// 
     /// </summary>
@@ -16,8 +18,8 @@ namespace HYMonitors
         private MonitorService instance;
         private object _lock = new object();
         private WatchDog watchDog;
-
         private Dictionary<string, Monitor> monitors;
+        public event WriteLog Logger;
 
         public MonitorService Instance
         {
@@ -39,9 +41,9 @@ namespace HYMonitors
             monitors = MonitorBuilder.Build();
             if (MonitorBuilder.WatchDog)
             {
-                var watchedMonitoredObjs =new List<BaseMonitoredObj>();
+                var watchedMonitoredObjs = new List<BaseMonitoredObj>();
                 monitors.Values.ToList().ForEach(x => watchedMonitoredObjs.AddRange(x.MonitoredObjs.Values.ToList().FindAll(y => y.Watched)));
-                watchDog = new WatchDog(watchedMonitoredObjs);
+                watchDog = new WatchDog(watchedMonitoredObjs, MonitorBuilder.WatchInterval.Value);
             }
         }
 
@@ -61,23 +63,35 @@ namespace HYMonitors
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns>json格式</returns>
-        public string GetMonitorInfos()
+        public List<Monitor> GetMonitorInfos()
         {
-            throw new NotImplementedException();
+            return monitors.Values.ToList();
         }
 
         public bool StartMonitor(string monitorName, string monitoredObjName, List<Object> args)
         {
-            return this.monitors[monitorName].MonitoredObjs[monitoredObjName].Start(args);
+            try
+            {
+                return this.monitors[monitorName].MonitoredObjs[monitoredObjName].Start(args);
+            }
+            catch (Exception ex)
+            {
+                Logger(ex.ToString());
+                throw ex;
+            }
         }
 
         public bool StopMonitor(string monitorName, string monitoredObjName)
         {
-            return this.monitors[monitorName].MonitoredObjs[monitoredObjName].Stop();
+            try
+            {
+                return this.monitors[monitorName].MonitoredObjs[monitoredObjName].Stop();
+            }
+            catch (Exception ex)
+            {
+                Logger(ex.ToString());
+                throw ex;
+            }
         }
 
         public List<Log> GetMonitorLogs(string monitorName, string monitoredObjName, int take, int skip)

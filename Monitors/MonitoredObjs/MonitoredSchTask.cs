@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace HYMonitors.MonitoredObjs
 {
@@ -15,13 +16,14 @@ namespace HYMonitors.MonitoredObjs
         private long isRunning;
         private object _lock = new object();
 
-        public MonitoredSchTask() : base()
+        public MonitoredSchTask()
+            : base()
         {
             isRunning = 0L;
             this.Watched = false;
         }
 
-        public override MonitorStatus GetStatus()
+        protected override MonitorStatus GetStatus()
         {
             if (Interlocked.Read(ref isRunning) == 1L)
             {
@@ -33,7 +35,7 @@ namespace HYMonitors.MonitoredObjs
             }
         }
 
-        public override bool Start(List<object> args)
+        internal override bool Start(List<object> args)
         {
             if (Interlocked.Read(ref isRunning) == 1L)
             {
@@ -57,21 +59,35 @@ namespace HYMonitors.MonitoredObjs
         /// <param name="o"></param>
         private void RunTaskProcess(object o)
         {
-            var args = (List<object>) o;
-
+            var args = (List<object>)o;
+            var command = string.Empty;
+            if (args != null)
+            {
+                command = string.Format("{0} {1}", this.ProcessFile, string.Join(" ", args));
+            }
+            else
+            {
+                command = this.ProcessFile;
+            }
             //process
             try
             {
-
+                var pro = new Process();
+                pro.StartInfo.FileName = "cmd.exe";
+                pro.StartInfo.Arguments = " /c " + command;
+                pro.StartInfo.UseShellExecute = true;
+                pro.StartInfo.CreateNoWindow = false; //不显示windows窗口
+                pro.Start();
+                pro.WaitForExit();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                
+                Console.WriteLine(ex.Message);
             }
             Interlocked.Exchange(ref isRunning, 0L);
         }
 
-        public override bool Stop()
+        internal override bool Stop()
         {
             throw new NotImplementedException();
         }

@@ -18,12 +18,14 @@ namespace HYMonitors
 
         public static bool WatchDog { get; set; }
 
-        internal static Dictionary<string, Monitor> Build()
+        public static int? WatchInterval;
+
+        public static Dictionary<string, Monitor> Build()
         {
             return Build(xmlPath);
         }
 
-        internal static Dictionary<string, Monitor> Build(string path)
+        public static Dictionary<string, Monitor> Build(string path)
         {
             // todo
             var monitors = new Dictionary<string, Monitor>();
@@ -36,28 +38,51 @@ namespace HYMonitors
             return monitors;
         }
 
-        internal static List<MonitorConfig> LoadConfig(string xmlpath)
+        public static List<MonitorConfig> LoadConfig(string xmlpath)
         {
-            var doc = XDocument.Load(xmlpath);
-            WatchDog = Boolean.Parse(doc.Element("Monitors").Element("WatchDog").Value);
-            var monitors = doc.Element("Monitors").Elements("Monitor");
-            var monitorsConf = from monitor in doc.Element("Monitors").Elements("Monitor")
-                               select new MonitorConfig()
-                               {
-                                   Name = monitor.Element("Name").Value,
-                                   MonitoredObjs = (from monitoredObj in monitor.Element("MonitoredObjs").Elements()
-                                                    select new MonitoredObjConfig()
-                                                    {
-                                                        Name = monitoredObj.Element("Name").Value,
-                                                        Desc = monitoredObj.Element("Desc").Value,
-                                                        Type = monitoredObj.Element("Type").Value,
-                                                        Remote = monitoredObj.Element("Remote") == null ? false : Boolean.Parse(monitoredObj.Element("Remote").Value),
-                                                        Watched = monitoredObj.Element("Watched") == null ? false : Boolean.Parse(monitoredObj.Element("Watched").Value),
-                                                        Property1 = monitoredObj.Element("Property1") == null ? null : monitoredObj.Element("Property1").Value,
-                                                        Property2 = monitoredObj.Element("Property2") == null ? null : monitoredObj.Element("Property2").Value
-                                                    }).ToList()
-                               };
-            return monitorsConf.ToList();
+            try
+            {
+                var doc = XDocument.Load(xmlpath);
+                WatchDog = Boolean.Parse(doc.Element("Monitors").Element("WatchDog").Value);
+                if (WatchDog)
+                {
+                    WatchInterval = Int32.Parse(doc.Element("Monitors").Element("WatchInterval").Value);
+                }
+                var monitors = doc.Element("Monitors").Elements("Monitor");
+                var monitorsConf = from monitor in doc.Element("Monitors").Elements("Monitor")
+                    select new MonitorConfig()
+                    {
+                        Name = monitor.Element("Name").Value,
+                        MonitoredObjs = (from monitoredObj in monitor.Element("MonitoredObjs").Elements()
+                            select new MonitoredObjConfig()
+                            {
+                                Name = monitoredObj.Element("Name").Value,
+                                Desc = monitoredObj.Element("Desc").Value,
+                                Type = monitoredObj.Element("Type").Value,
+                                Remote =
+                                    monitoredObj.Element("Remote") == null
+                                        ? false
+                                        : Boolean.Parse(monitoredObj.Element("Remote").Value),
+                                Watched =
+                                    monitoredObj.Element("Watched") == null
+                                        ? false
+                                        : Boolean.Parse(monitoredObj.Element("Watched").Value),
+                                Property1 =
+                                    monitoredObj.Element("Property1") == null
+                                        ? null
+                                        : monitoredObj.Element("Property1").Value,
+                                Property2 =
+                                    monitoredObj.Element("Property2") == null
+                                        ? null
+                                        : monitoredObj.Element("Property2").Value
+                            }).ToList()
+                    };
+                return monitorsConf.ToList();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         private static Monitor CreateMonitor(MonitorConfig config)
@@ -76,7 +101,7 @@ namespace HYMonitors
 
     static class MonitoredObjFactory
     {
-        internal static BaseMonitoredObj CreateMonitoredObj(MonitoredObjConfig config)
+        public static BaseMonitoredObj CreateMonitoredObj(MonitoredObjConfig config)
         {
             switch (config.Type)
             {
@@ -126,7 +151,8 @@ namespace HYMonitors
                 Desc = config.Desc,
                 Remote = config.Remote,
                 Watched = config.Watched,
-                HasLog = false
+                HasLog = false,
+                MachineName = config.Property1
             };
             return monitoredObj;
         }
