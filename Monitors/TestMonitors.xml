@@ -35,7 +35,7 @@
       <MonitoredObj>
         <Name>TestSchTask</Name>
         <Desc>交易所清算文件(DBF)的解析</Desc>
-        <Type>MonitoredSchTask</Type>
+        <Type>MonitoredSchTaskBat</Type>
         <Property1>D:\language\c#\projects\SecondMonitor\Monitors\bin\Debug\Test\date.bat</Property1>
       </MonitoredObj>
     </MonitoredObjs>

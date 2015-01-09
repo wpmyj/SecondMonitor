@@ -18,7 +18,7 @@ namespace HYMonitors
 
         public static bool WatchDog { get; set; }
 
-        public static int? WatchInterval;
+        public static int WatchInterval;
 
         public static Dictionary<string, Monitor> Build()
         {
@@ -44,39 +44,37 @@ namespace HYMonitors
             {
                 var doc = XDocument.Load(xmlpath);
                 WatchDog = Boolean.Parse(doc.Element("Monitors").Element("WatchDog").Value);
-                if (WatchDog)
-                {
-                    WatchInterval = Int32.Parse(doc.Element("Monitors").Element("WatchInterval").Value);
-                }
+                WatchInterval = Int32.Parse(doc.Element("Monitors").Element("WatchInterval").Value);
+
                 var monitors = doc.Element("Monitors").Elements("Monitor");
                 var monitorsConf = from monitor in doc.Element("Monitors").Elements("Monitor")
-                    select new MonitorConfig()
-                    {
-                        Name = monitor.Element("Name").Value,
-                        MonitoredObjs = (from monitoredObj in monitor.Element("MonitoredObjs").Elements()
-                            select new MonitoredObjConfig()
-                            {
-                                Name = monitoredObj.Element("Name").Value,
-                                Desc = monitoredObj.Element("Desc").Value,
-                                Type = monitoredObj.Element("Type").Value,
-                                Remote =
-                                    monitoredObj.Element("Remote") == null
-                                        ? false
-                                        : Boolean.Parse(monitoredObj.Element("Remote").Value),
-                                Watched =
-                                    monitoredObj.Element("Watched") == null
-                                        ? false
-                                        : Boolean.Parse(monitoredObj.Element("Watched").Value),
-                                Property1 =
-                                    monitoredObj.Element("Property1") == null
-                                        ? null
-                                        : monitoredObj.Element("Property1").Value,
-                                Property2 =
-                                    monitoredObj.Element("Property2") == null
-                                        ? null
-                                        : monitoredObj.Element("Property2").Value
-                            }).ToList()
-                    };
+                                   select new MonitorConfig()
+                                   {
+                                       Name = monitor.Element("Name").Value,
+                                       MonitoredObjs = (from monitoredObj in monitor.Element("MonitoredObjs").Elements()
+                                                        select new MonitoredObjConfig()
+                                                        {
+                                                            Name = monitoredObj.Element("Name").Value,
+                                                            Desc = monitoredObj.Element("Desc").Value,
+                                                            Type = monitoredObj.Element("Type").Value,
+                                                            Remote =
+                                                                monitoredObj.Element("Remote") == null
+                                                                    ? false
+                                                                    : Boolean.Parse(monitoredObj.Element("Remote").Value),
+                                                            Watched =
+                                                                monitoredObj.Element("Watched") == null
+                                                                    ? false
+                                                                    : Boolean.Parse(monitoredObj.Element("Watched").Value),
+                                                            Property1 =
+                                                                monitoredObj.Element("Property1") == null
+                                                                    ? null
+                                                                    : monitoredObj.Element("Property1").Value,
+                                                            Property2 =
+                                                                monitoredObj.Element("Property2") == null
+                                                                    ? null
+                                                                    : monitoredObj.Element("Property2").Value
+                                                        }).ToList()
+                                   };
                 return monitorsConf.ToList();
             }
             catch (Exception ex)
@@ -109,7 +107,7 @@ namespace HYMonitors
                     return CreateMonitoredIISApp(config);
                 case "MonitoredService":
                     return CreateMonitoredService(config);
-                case "MonitoredSchTask":
+                case "MonitoredSchTaskBat":
                     return CreateMonitoredSchTask(config);
                 default:
                     break;
@@ -159,7 +157,7 @@ namespace HYMonitors
 
         private static BaseMonitoredObj CreateMonitoredSchTask(MonitoredObjConfig config)
         {
-            var monitoredObj = new MonitoredSchTask
+            var monitoredObj = new MonitoredSchTaskBat
             {
                 Name = config.Name,
                 Desc = config.Desc,

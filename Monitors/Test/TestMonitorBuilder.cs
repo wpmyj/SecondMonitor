@@ -19,6 +19,17 @@ namespace HYMonitors.Test
         {
         }
 
+
+        [Test]
+        public void TestNullableRef()
+        {
+            int? x = 1;
+            int? y = x;
+            x = 2;
+            Assert.AreNotEqual(x, y);
+        }
+
+
         [Test]
 
         public void TestLoadConfig()

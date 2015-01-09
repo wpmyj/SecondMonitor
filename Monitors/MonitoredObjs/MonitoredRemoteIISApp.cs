@@ -1,20 +1,24 @@
-﻿using HYMonitors.MonitoredObjs;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HYMonitors.CustomMonitors
+namespace HYMonitors.MonitoredObjs
 {
-    class CustomMonitoredObj2 : CustomMonitoredObj
+    class MonitoredRemoteIISApp : NestedMonitoredObj
     {
-        internal override MonitorStatus GetStatus()
+        public MonitoredRemoteIISApp(MonitoredIISPool container)
+            : base(container)
+        {
+        }
+
+        protected override MonitorStatus GetSelfStatus()
         {
             throw new NotImplementedException();
         }
 
-        internal override bool Start(List<object> args)
+        protected override bool StartSelf(List<object> args)
         {
             throw new NotImplementedException();
         }

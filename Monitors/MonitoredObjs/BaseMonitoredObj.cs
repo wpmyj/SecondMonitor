@@ -13,20 +13,24 @@ namespace HYMonitors.MonitoredObjs
         private MonitorStatus? currentStatus;
         private ReaderWriterLock statusLock;
         private DateTime statusUpdateTime;
-        private TimeSpan timeout;
+        protected TimeSpan timeout;
 
         public virtual string Name { get; set; }
         public string Url { get; set; }
-        public string ProcessFile { get; set; }
+        
         public string Desc { get; set; }
         public bool HasLog { get; set; }
         public bool Watched { get; set; }
         public bool Remote { get; set; }
+
+        /// <summary>
+        /// 程序集外访问缓存的状态
+        /// </summary>
         public MonitorStatus Status
         {
             get
             {
-                MonitorStatus? _status;
+                MonitorStatus status;
                 try
                 {
                     statusLock.AcquireReaderLock(timeout);
@@ -39,25 +43,29 @@ namespace HYMonitors.MonitoredObjs
                         statusUpdateTime = DateTime.Now;
                         statusLock.DowngradeFromWriterLock(ref lc);
                     }
-                    _status = currentStatus;
+                    status = currentStatus.Value;
                 }
                 finally
                 {
                     statusLock.ReleaseReaderLock();
                 }
-                return _status.Value;
+                return status;
             }
         }
 
         public BaseMonitoredObj()
         {
             statusLock = new ReaderWriterLock();
-            timeout = new TimeSpan(0, 0, 5);  //
+            timeout = new TimeSpan(0, 0, MonitorBuilder.WatchInterval);  //
         }
 
         public Logger Logger { get; set; }
 
-        protected abstract MonitorStatus GetStatus();
+        /// <summary>
+        /// 程序集内部可以实时访问状态
+        /// </summary>
+        /// <returns></returns>
+        internal abstract MonitorStatus GetStatus();
 
         internal abstract bool Start(List<object> args);
 
@@ -74,7 +82,7 @@ namespace HYMonitors.MonitoredObjs
             this.container = container;
         }
 
-        protected override MonitorStatus GetStatus()
+        internal override MonitorStatus GetStatus()
         {
             if (container.Status != MonitorStatus.Running)
             {

@@ -1,13 +1,16 @@
-﻿using HYMonitors.MonitoredObjs;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace HYMonitors.CustomMonitors
+namespace HYMonitors.MonitoredObjs
 {
-    class CustomMonitoredObj1 : CustomMonitoredObj
+    class MonitoredRemoteSchTaskBat :BaseMonitoredObj
     {
+
+        public string ProcessFile { get; set; }
+
         internal override MonitorStatus GetStatus()
         {
             throw new NotImplementedException();

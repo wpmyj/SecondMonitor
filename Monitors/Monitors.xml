@@ -27,7 +27,7 @@
       <MonitoredObj>
         <Name>HBusWeb</Name>
         <Desc>交易所清算文件(DBF)的解析</Desc>
-        <Type>MonitoredSchTask</Type>
+        <Type>MonitoredSchTaskBat</Type>
         <Property1></Property1>
       </MonitoredObj>
     </MonitoredObjs>

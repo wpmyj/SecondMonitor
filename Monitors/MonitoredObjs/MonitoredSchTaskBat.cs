@@ -11,19 +11,21 @@ namespace HYMonitors.MonitoredObjs
     /// <summary>
     /// 用schtasks命令和系统互交
     /// </summary>
-    class MonitoredSchTask : BaseMonitoredObj
+    class MonitoredSchTaskBat : BaseMonitoredObj
     {
         private long isRunning;
         private object _lock = new object();
 
-        public MonitoredSchTask()
+        public string ProcessFile { get; set; }
+
+        public MonitoredSchTaskBat()
             : base()
         {
             isRunning = 0L;
             this.Watched = false;
         }
 
-        protected override MonitorStatus GetStatus()
+        internal override MonitorStatus GetStatus()
         {
             if (Interlocked.Read(ref isRunning) == 1L)
             {

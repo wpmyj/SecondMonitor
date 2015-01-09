@@ -48,7 +48,10 @@
     <Compile Include="MonitorBuilder.cs" />
     <Compile Include="MonitoredObjs\CustomMonitoredObj.cs" />
     <Compile Include="MonitoredObjs\BaseMonitoredObj.cs" />
-    <Compile Include="MonitoredObjs\MonitoredSchTask.cs" />
+    <Compile Include="MonitoredObjs\MonitoredRemoteIISApp.cs" />
+    <Compile Include="MonitoredObjs\MonitoredRemoteSchTaskBat.cs" />
+    <Compile Include="MonitoredObjs\MonitoredRemoteService.cs" />
+    <Compile Include="MonitoredObjs\MonitoredSchTaskBat.cs" />
     <Compile Include="MonitoredObjs\MonitoredService.cs" />
     <Compile Include="MonitoredObjs\MonitoredIISApp.cs" />
     <Compile Include="MonitoredObjs\CustomMonitoredObjs\CustomMonitoredObj1.cs" />

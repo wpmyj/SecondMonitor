@@ -43,7 +43,7 @@ namespace HYMonitors
             {
                 var watchedMonitoredObjs = new List<BaseMonitoredObj>();
                 monitors.Values.ToList().ForEach(x => watchedMonitoredObjs.AddRange(x.MonitoredObjs.Values.ToList().FindAll(y => y.Watched)));
-                watchDog = new WatchDog(watchedMonitoredObjs, MonitorBuilder.WatchInterval.Value);
+                watchDog = new WatchDog(watchedMonitoredObjs, MonitorBuilder.WatchInterval);
             }
         }
 

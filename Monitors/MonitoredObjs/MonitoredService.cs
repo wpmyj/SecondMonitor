@@ -18,12 +18,10 @@ namespace HYMonitors.MonitoredObjs
 {
     /// <summary>
     /// 权限问题：允许NETWORK SERVICE来启动service
-    /// 
     /// </summary>
     class MonitoredService : BaseMonitoredObj
     {
         private object _lock = new object();
-        private TimeSpan timeout;
         private ServiceController service;
 
         public override string Name {
@@ -48,10 +46,9 @@ namespace HYMonitors.MonitoredObjs
             : base()
         {
             service = new ServiceController();
-            timeout = new TimeSpan(0, 0, 10);
         }
 
-        protected override MonitorStatus GetStatus()
+        internal override MonitorStatus GetStatus()
         {
             var serviceStatus = service.Status;
             MonitorStatus status = MonitorStatus.Stop;

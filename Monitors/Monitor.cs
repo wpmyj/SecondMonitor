@@ -26,7 +26,7 @@ namespace HYMonitors
                 foreach (var pair in MonitoredObjs)
                 {
                     var type = pair.Value.GetType();
-                    if (type != typeof(MonitoredSchTask))
+                    if (type != typeof(MonitoredSchTaskBat))
                     {
                         var s = pair.Value.Status;
                         if ((int)status < (int)s)

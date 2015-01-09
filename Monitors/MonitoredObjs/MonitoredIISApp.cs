@@ -16,7 +16,7 @@ namespace HYMonitors.MonitoredObjs
             this.Name = "IIS";
         }
 
-        protected override MonitorStatus GetStatus()
+        internal override MonitorStatus GetStatus()
         {
             throw new NotImplementedException();
         }
