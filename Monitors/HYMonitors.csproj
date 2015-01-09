@@ -55,7 +55,6 @@
     <Compile Include="MonitoredObjs\MonitoredService.cs" />
     <Compile Include="MonitoredObjs\MonitoredIISApp.cs" />
     <Compile Include="MonitoredObjs\CustomMonitoredObjs\CustomMonitoredObj1.cs" />
-    <Compile Include="MonitoredObjs\CustomMonitoredObjs\CustomMonitoredObj2.cs" />
     <Compile Include="Loggers\Logger.cs" />
     <Compile Include="MonitorConfig.cs" />
     <Compile Include="Monitor.cs" />

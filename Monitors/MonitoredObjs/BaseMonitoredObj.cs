@@ -123,5 +123,4 @@ namespace HYMonitors.MonitoredObjs
         protected abstract bool StartSelf(List<object> args);
 
     }
-
 }
