@@ -24,13 +24,14 @@ namespace HYMonitors.MonitoredObjs
         private object _lock = new object();
         private ServiceController service;
 
-        public override string Name {
+        public override string Name
+        {
             get { return base.Name; }
             set
             {
                 base.Name = value;
                 service.ServiceName = value;
-            } 
+            }
         }
 
         public string MachineName
@@ -40,6 +41,7 @@ namespace HYMonitors.MonitoredObjs
                 //service.MachineName = Environment.MachineName;
                 service.MachineName = value;
             }
+            get { return service.MachineName; }
         }
 
         public MonitoredService()

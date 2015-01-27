@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using HYMonitors.MonitoredObjs;
 
@@ -13,6 +14,8 @@ namespace HYMonitors
         private object _lock = new object();
         private List<BaseMonitoredObj> monitoredObjs;
         private int interval;  //second
+
+        internal event Action<string> Logger;
 
         internal WatchDog(List<BaseMonitoredObj> monitoredObjs, int interval = 5)
         {
@@ -33,9 +36,25 @@ namespace HYMonitors
             var monitoredObj = o as BaseMonitoredObj;
             while (Interlocked.Read(ref isRunning) == 1L)
             {
-                if (monitoredObj.Status != MonitorStatus.Running)
+                if (monitoredObj.GetStatus() != MonitorStatus.Running)
                 {
-                    monitoredObj.Start(null);
+                    try
+                    {
+                        WriteLog(string.Format("WatchDoc监控到 {0} 非运行状态，尝试启动", monitoredObj.Name));
+                        var ret = monitoredObj.Start(null);
+                        if (ret)
+                        {
+                            WriteLog(string.Format("WatchDoc启动 {0} 成功", monitoredObj.Name));
+                        }
+                        else
+                        {
+                            WriteLog(string.Format("WatchDoc启动 {0} 失败", monitoredObj.Name));
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        WriteLog(string.Format("WatchDoc启动 {0} 出现异常：\r\n{1}", monitoredObj.Name, ex.ToString()));
+                    }
                 }
                 for (int i = 0; i < interval; i++)
                 {
@@ -68,6 +87,14 @@ namespace HYMonitors
         public void Stop()
         {
             Interlocked.Exchange(ref isRunning, 0L);
+        }
+
+        private void WriteLog(string msg)
+        {
+            if (this.Logger != null)
+            {
+                this.Logger(msg);
+            }
         }
     }
 }

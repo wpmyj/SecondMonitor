@@ -29,6 +29,14 @@ namespace HYMonitors.Test
             Assert.AreNotEqual(x, y);
         }
 
+        [Test]
+        public void TestSubList()
+        {
+            var list = new List<double> {0.2, 0.2, 0.2, 0.2};
+            var subList = list.GetRange(0, list.Count/2);
+            Assert.AreEqual(2, subList.Count);
+        }
+
 
         [Test]
 

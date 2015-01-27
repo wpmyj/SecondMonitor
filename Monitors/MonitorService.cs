@@ -7,7 +7,6 @@ using System.Collections.Generic;
 
 namespace HYMonitors
 {
-    public delegate void WriteLog(string msg);
 
     /// <summary>
     /// 
@@ -19,7 +18,6 @@ namespace HYMonitors
         private object _lock = new object();
         private WatchDog watchDog;
         private Dictionary<string, Monitor> monitors;
-        public event WriteLog Logger;
 
         public MonitorService Instance
         {
@@ -47,6 +45,11 @@ namespace HYMonitors
             }
         }
 
+        public void AddWatchDog(Action<string> logger)
+        {
+            this.watchDog.Logger += logger;
+        }
+
         public void Start()
         {
             if (watchDog != null)
@@ -70,28 +73,12 @@ namespace HYMonitors
 
         public bool StartMonitor(string monitorName, string monitoredObjName, List<Object> args)
         {
-            try
-            {
-                return this.monitors[monitorName].MonitoredObjs[monitoredObjName].Start(args);
-            }
-            catch (Exception ex)
-            {
-                Logger(ex.ToString());
-                throw ex;
-            }
+            return this.monitors[monitorName].MonitoredObjs[monitoredObjName].Start(args);
         }
 
         public bool StopMonitor(string monitorName, string monitoredObjName)
         {
-            try
-            {
-                return this.monitors[monitorName].MonitoredObjs[monitoredObjName].Stop();
-            }
-            catch (Exception ex)
-            {
-                Logger(ex.ToString());
-                throw ex;
-            }
+            return this.monitors[monitorName].MonitoredObjs[monitoredObjName].Stop();
         }
 
         public List<Log> GetMonitorLogs(string monitorName, string monitoredObjName, int take, int skip)

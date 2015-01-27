@@ -9,7 +9,7 @@ using NUnit.Framework;
 
 namespace HYMonitors.Test
 {
-    class TestMonitoredSchTask
+    class TestMonitoredSchTaskBat
     {
         private BaseMonitoredObj instance;
 

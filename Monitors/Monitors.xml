@@ -18,6 +18,7 @@
         <Desc>HBus CMDS推送服务</Desc>
         <Watched>true</Watched>
         <Type>MonitoredService</Type>
+        <Property1>.</Property1>
       </MonitoredObj>
     </MonitoredObjs>
   </Monitor>

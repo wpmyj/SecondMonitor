@@ -64,7 +64,7 @@
     <Compile Include="Test\Class1.cs" />
     <Compile Include="Test\TestMonitorBuilder.cs" />
     <Compile Include="Test\TestMonitoredIISApp.cs" />
-    <Compile Include="Test\TestMonitoredSchTask.cs" />
+    <Compile Include="Test\TestMonitoredSchTaskBat.cs" />
     <Compile Include="Test\TestMonitoredService.cs" />
     <Compile Include="WatchDog.cs" />
   </ItemGroup>

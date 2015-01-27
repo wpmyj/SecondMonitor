@@ -3,10 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SecondMonitor", "SecondMonitor\SecondMonitor.csproj", "{F19C300F-A12B-4E10-A324-24789C3ACF90}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SecondMonitor.Tests", "SecondMonitor.Tests\SecondMonitor.Tests.csproj", "{05A782DB-ABE3-4EDC-8483-EF38397FDBBB}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HYMonitors", "Monitors\HYMonitors.csproj", "{BC90A5C4-5D38-4A90-A1EF-DC4B31F4DDAD}"
 EndProject
 Global
@@ -15,14 +11,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{F19C300F-A12B-4E10-A324-24789C3ACF90}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F19C300F-A12B-4E10-A324-24789C3ACF90}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F19C300F-A12B-4E10-A324-24789C3ACF90}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F19C300F-A12B-4E10-A324-24789C3ACF90}.Release|Any CPU.Build.0 = Release|Any CPU
-		{05A782DB-ABE3-4EDC-8483-EF38397FDBBB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{05A782DB-ABE3-4EDC-8483-EF38397FDBBB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{05A782DB-ABE3-4EDC-8483-EF38397FDBBB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{05A782DB-ABE3-4EDC-8483-EF38397FDBBB}.Release|Any CPU.Build.0 = Release|Any CPU
 		{BC90A5C4-5D38-4A90-A1EF-DC4B31F4DDAD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{BC90A5C4-5D38-4A90-A1EF-DC4B31F4DDAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BC90A5C4-5D38-4A90-A1EF-DC4B31F4DDAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
